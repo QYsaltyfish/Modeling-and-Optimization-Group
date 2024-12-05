@@ -1,7 +1,7 @@
 from Code.model_build.builder import *
+import json
 from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 from typing import Type
-from abc import ABC, abstractmethod
 
 
 class Solver(ABC):
@@ -15,7 +15,7 @@ class Solver(ABC):
     def apply(self):
         start_time = time.time()
         self.model_apply()
-        elapsed_time = time.time() - start_time
+        elapsed_time = int(time.time() - start_time)
 
         print(f'Model Apply Time: {elapsed_time}')
         with open(f"{self.score_timing_path}/model_apply_time.json", 'w') as file:
@@ -29,7 +29,10 @@ class Solver(ABC):
 class RandomSolver(Solver):
 
     def model_apply(self):
-        pass
+        new_route_data = json.loads(f"{self.apply_input_path}/new_route_data.json")
+        new_travel_times = json.loads(f"{self.apply_input_path}/new_travel_times.json")
+
+
 
 
 class NaiveTSPSolver(Solver):
@@ -39,6 +42,6 @@ class NaiveTSPSolver(Solver):
 
 
 algorithm_registry: dict[str, tuple[Type[Builder], Type[Solver]]] = {
-    "Random": (Builder, RandomSolver),
+    "Random": (EmptyBuilder, RandomSolver),
     "NaiveTSP": (NaiveTSPBuilder, NaiveTSPSolver),
 }

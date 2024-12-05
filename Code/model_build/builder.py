@@ -12,13 +12,19 @@ class Builder(ABC):
     def build(self):
         start_time = time.time()
         self.model_build()
-        elapsed_time = time.time() - start_time
+        elapsed_time = int(time.time() - start_time)
 
         print(f'Model Build Time: {elapsed_time}')
         with open(f"{self.score_timing_path}/model_build_time.json", 'w') as file:
             file.write(f"""{{"time": {elapsed_time}, "status": "success"}}""")
 
     @abstractmethod
+    def model_build(self):
+        pass
+
+
+class EmptyBuilder(Builder):
+
     def model_build(self):
         pass
 
