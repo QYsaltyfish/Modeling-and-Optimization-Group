@@ -21,6 +21,18 @@ def model_test(model: str):
     )
     solver.apply()
 
+    output = model_score.evaluate(
+        "../Training dataset/model_score_inputs/new_actual_sequences.json",
+        "../Training dataset/model_apply_outputs/proposed_sequences.json",
+        "../Training dataset/model_apply_inputs/new_travel_times.json",
+        "../Training dataset/model_score_inputs/new_invalid_sequence_scores.json"
+    )
+
+    if all(output["route_feasibility"].values()):
+        print(f"""Submission score: {output["submission_score"]}""")
+    else:
+        print(f"""Submission error:\n{output["route_feasibility"]}""")
+
 
 if __name__ == '__main__':
     model_test("Random")
