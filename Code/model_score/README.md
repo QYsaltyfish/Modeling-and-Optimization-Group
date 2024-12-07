@@ -4,7 +4,7 @@ The Python script 'score.py' recreates how organizers will score user-generated 
 # Scoring Logic
 The scoring function below calculates the similarity between the true driver-taken sequence and a user-submitted sequence. It combines elements of Sequence Deviation and Edit Distance with Real Penalty. The score of each user-submitted route is defined as follows:
 
-$score = \frac{SD(A,B) \cdot {ERP}_{norm}(A,B)}{{ERP}_e(A,B)}$
+$score = \displaystyle\frac{SD(A,B) \cdot {ERP}_{norm}(A,B)}{{ERP}_e(A,B)}$
 
 where sequence $A$ is the historically realized sequence of deliveries, sequence $B$ is the algorithm-produced sequence of deliveries, $SD$ denotes the Sequence Deviation of $B$ with respect to $A$, $ERP_{norm}$ denotes the Edit Distance with Real Penalty applied to sequences $A$ and $B$ with normalized travel times, and ${ERP}_e$ denotes the number of edits prescribed by the $ERP$ algorithm on sequence $B$ with respect to $A$. If edit distance with real penalty prescribes 0 edits, then the above formula is replaced by the sequence deviation, multiplied by 0.
 

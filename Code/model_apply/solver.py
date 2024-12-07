@@ -1,5 +1,4 @@
 from Code.model_build.builder import *
-import json
 import numpy as np
 from ortools.constraint_solver import pywrapcp, routing_enums_pb2
 from typing import Type
@@ -24,6 +23,7 @@ class Solver(ABC):
 
         print(f'Model Apply Time: {elapsed_time}')
 
+        # noinspection PyTypeChecker
         json.dump(proposed_sequences, open(f"{self.apply_output_path}/proposed_sequences.json", 'w'))
         with open(f"{self.score_timing_path}/model_apply_time.json", 'w') as file:
             file.write(f"""{{"time": {elapsed_time}, "status": "success"}}""")
