@@ -51,42 +51,6 @@ class BuilderUtils(Builder, ABC):
             open(f"{self.build_input_path}/fine_grained_travel_times.json")
         )
 
-    @staticmethod
-    def build_adjacency_matrix(route_travel_times):
-        """
-        Parameters
-        ----------
-        route_travel_times: dict
-        Dictionary containing the travel times for a specific route.
-
-        Data format:
-        {
-            "<stop-id*>": {
-              "<stop-id*>": 0,
-              "<stop-id>": "<float-number>",
-              "<stop-id>": "<float-number>",
-              "..."
-            },
-            "<stop-id*>": {
-              "<stop-id>": "<float-number>",
-              "<stop-id*>": 0,
-              "<stop-id>": "<float-number>",
-              "..."
-            },
-            "..."
-        },
-        """
-
-        n = len(route_travel_times)
-        adjacency_matrix = np.zeros((n, n))
-
-        for start, start_dict in route_travel_times.items():
-            for stop, dist in start_dict.items():
-                adjacency_matrix[start, stop] = dist
-
-        return adjacency_matrix
-
-
 class EmptyBuilder(Builder):
 
     def model_build(self):
@@ -97,5 +61,3 @@ class NaiveTSPBuilder(BuilderUtils):
 
     def model_build(self):
         self.read_fine_grained_dataset()
-
-
